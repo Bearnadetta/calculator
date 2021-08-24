@@ -23,8 +23,30 @@ body {
 }
 
 #calcButtons {
+    position: relative;
     border: 1px solid black;
     height: 70%;
     width: 80%;
     margin: 40px;
+}
+#calcNumbers {
+    width: 70%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+#calcOperators {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 5px;
+    width: 20%;
+    
+
+}
+.button {
+    padding: 10px;
+    margin: 10px;
 }

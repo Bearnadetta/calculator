@@ -12,7 +12,7 @@ const pressNum = function(e) {
 const pageLoad = function() {
     for(i = 0; i < numBtns.length; i++) {
         numBtns[i].addEventListener('click',function(){
-            pressNum(e);
+            pressNum();
         });
     }
 }

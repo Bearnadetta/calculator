@@ -1,3 +1,21 @@
+let displayContent = [];
+
+const numBtns = document.getElementsByClassName('numeralBtn');
+
+const pressNum = function(e) {
+    if(displayContent.length < 12) {
+        displayContent.push(e.textContent);
+        document.getElementById('display').textContent = displayContent.join('');
+    }
+}
+
+const pageLoad = function() {
+    for(i = 0; i < numBtns.length; i++) {
+        numBtns[i].addEventListener('click',function(){
+            pressNum(e);
+        });
+    }
+}
 
 //adds two numbers
 const add = function(a, b) {
@@ -34,3 +52,4 @@ const operate = function(operator, num1, num2) {
         return divide(num1, num2);
     }
 }
+pageLoad();

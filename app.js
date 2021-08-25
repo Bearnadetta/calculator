@@ -1,21 +1,33 @@
 let displayContent = [];
 
-const numBtns = document.getElementsByClassName('numeralBtn');
-
+const pressDec = function() {
+    if((displayContent.length < 10) && !(displayContent.includes('.'))) {
+        displayContent.push('.')
+        document.getElementById('display').textContent = displayContent.join('');
+    }
+}
 const pressNum = function(e) {
-    if(displayContent.length < 12) {
-        displayContent.push(e.textContent);
+    if(displayContent.length < 10) {
+        displayContent.push(e);
         document.getElementById('display').textContent = displayContent.join('');
     }
 }
 
+
+
 const pageLoad = function() {
+    const numBtns = document.getElementsByClassName('numeralBtn');
     for(i = 0; i < numBtns.length; i++) {
+        let numValue = numBtns[i].textContent;
         numBtns[i].addEventListener('click',function(){
-            pressNum();
-        });
+            pressNum(numValue);
+        })
     }
-}
+    const decBtn = document.getElementById('btnDecimal');
+    decBtn.addEventListener('click', function(){
+        pressDec();
+    })
+};
 
 //adds two numbers
 const add = function(a, b) {

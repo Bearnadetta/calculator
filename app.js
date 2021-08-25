@@ -1,19 +1,51 @@
 let displayContent = [];
+let aValue = [];
+let bValue = [];
+let opValue = '';
+const display = document.getElementById('display');
 
 const pressDec = function() {
     if((displayContent.length < 10) && !(displayContent.includes('.'))) {
         displayContent.push('.')
-        document.getElementById('display').textContent = displayContent.join('');
+        display.textContent = displayContent.join('');
     }
-}
+};
 const pressNum = function(e) {
     if(displayContent.length < 10) {
         displayContent.push(e);
-        document.getElementById('display').textContent = displayContent.join('');
+       display.textContent = displayContent.join('');
+    }
+};
+
+const pressOperator = function(e) {
+    if(aValue && bValue && opValue) {
+        
+    }
+    aValue = bValue;
+    bValue = displayContent;
+    display.textContent = displayContent.join('');
+    displayContent = [];
+    opValue = e;
+}
+const pressEquals = function() {
+    aValue = bValue;
+    bValue = displayContent;
+    let a = parseFloat(aValue.join(''));
+    let b = parseFloat(bValue.join(''));
+    newResult = operate(opValue, a, b);
+    displayContent = Array.from(String(newResult));
+    if(displayContent.length > 10) {
+        display.textContent = 'MAXDIGITS'
+    } else {
+        display.textContent = displayContent.join('');
+        aValue = [];
     }
 }
 
-
+const clearDisplay = function() {
+    displayContent = [];
+    display.textContent = displayContent
+};
 
 const pageLoad = function() {
     const numBtns = document.getElementsByClassName('numeralBtn');
@@ -27,6 +59,30 @@ const pageLoad = function() {
     decBtn.addEventListener('click', function(){
         pressDec();
     })
+    const clearBtn = document.getElementById('btnClear');
+    clearBtn.addEventListener('click', function(){
+        clearDisplay();
+    })
+    const plusBtn = document.getElementById('btnPlus');
+    plusBtn.addEventListener('click', function() {
+        pressOperator('plus');
+    })
+    const minusBtn = document.getElementById('btnMinus');
+    minusBtn.addEventListener('click', function() {
+        pressOperator('minus');
+    })
+    const multiplyBtn = document.getElementById('btnMultiply');
+    multiplyBtn.addEventListener('click', function() {
+        pressOperator('times');
+    })
+    const divideBtn = document.getElementById('btnDivide');
+    divideBtn.addEventListener('click', function() {
+        pressOperator('division');
+    })
+    const equalBtn = document.getElementById('btnEquals');
+    equalBtn.addEventListener('click', function(){
+        pressEquals();
+    })
 };
 
 //adds two numbers
@@ -36,22 +92,22 @@ const add = function(a, b) {
 //subtracts b from a
 const subtract = function(a, b) {
     return (a - b);
-}
+};
 //multiplies two numbers
 const multiply = function(a, b) {
     return (a * b);
-}
+};
 //divides a by b, returns remainder in rounded decimal
 const divide = function(a, b) {
     //prevent divide by 0
     if(b == 0) {
         return 'ERROR';
     }else if ((a % b ) != 0) {
-        return (Math.round(a * 1000000.0 / b)/1000000)
+        return (Math.round(a * 10000.0 / b)/10000)
     }else {
         return (a / b);
     }
-}
+};
 //calls one of the operator functions with two numbers
 const operate = function(operator, num1, num2) {
     if(operator == 'plus') {
@@ -63,5 +119,5 @@ const operate = function(operator, num1, num2) {
     }else if(operator == 'division'){
         return divide(num1, num2);
     }
-}
+};
 pageLoad();

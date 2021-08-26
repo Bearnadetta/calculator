@@ -58,19 +58,25 @@ body {
     font-weight: bold;
     font-size: 15px;
 }
+.opButton {
+    background-color: #F3A5E5;
+}
 .button:active {
     transform: translateY(3px);
 }
 
+#btnCe {
+    background-color: #A5B1F3
+}
 #btn0 {
     grid-column: span 2;
 }
 #btnEquals {
     grid-row: span 2;
+    background-color: #F3CDA5;
 }
 #btnClear {
-    grid-column: span 2;
-    background-color: #7481aa;
+    background-color: #F3A7A5;
 }
 
 #gitHubLink {

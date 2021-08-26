@@ -18,7 +18,11 @@ const pressNum = function(e) {
 };
 
 const pressOperator = function(e) {
-    
+    let subA = bValue;
+    let subB = displayContent;
+    if((subA.length > 0) && (subB.length > 0) && opValue) {
+        pressEquals();
+    }
     aValue = bValue;
     bValue = displayContent;
     display.textContent = displayContent.join('');
@@ -41,15 +45,19 @@ const pressEquals = function() {
         display.textContent = '(MAXDIGITS)'
     } else {
         display.textContent = displayContent.join('');
-       // aValue = [];
     }
-}
+};
 
 const clearDisplay = function() {
+    aValue = [];
+    bValue = [];
     displayContent = [];
     display.textContent = displayContent
 };
-
+const clearEntry = function() {
+    displayContent = [];
+    display.textContent = displayContent;
+};
 const pageLoad = function() {
     const numBtns = document.getElementsByClassName('numeralBtn');
     for(i = 0; i < numBtns.length; i++) {
@@ -65,6 +73,10 @@ const pageLoad = function() {
     const clearBtn = document.getElementById('btnClear');
     clearBtn.addEventListener('click', function(){
         clearDisplay();
+    })
+    const clearEntryBtn = document.getElementById('btnCe');
+    clearEntryBtn.addEventListener('click', function() {
+        clearEntry();
     })
     const plusBtn = document.getElementById('btnPlus');
     plusBtn.addEventListener('click', function() {
@@ -83,7 +95,7 @@ const pageLoad = function() {
         pressOperator('division');
     })
     const equalBtn = document.getElementById('btnEquals');
-    equalBtn.addEventListener('click', function(){
+    equalBtn.addEventListener('click', function() {
         pressEquals();
     })
 };

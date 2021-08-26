@@ -75,12 +75,12 @@ const pressEquals = function() {
     if(displayContent.length > 10) {
         displayContent = ['M','A','X','D','I','G','I','T','S']
         display.textContent = displayContent.join('');
-        unSelected();
+       
     } else {
         display.textContent = displayContent.join('');
         storedOp = opValue
         opValue = '';
-        unSelected();
+        
     }
 };
 // removes the selected class from operator buttons when called
@@ -157,6 +157,7 @@ const pageLoad = function() {
     })
     const equalBtn = document.getElementById('btnEquals');
     equalBtn.addEventListener('click', function() {
+        unSelected();
         pressEquals();
     })
 };

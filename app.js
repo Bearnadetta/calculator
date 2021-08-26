@@ -4,27 +4,38 @@ let bValue = [];
 let opValue = '';
 let storedOp = '';
 const display = document.getElementById('display');
-
+//decimal is added to display on press
 const pressDec = function() {
+    if((displayContent.join('') == 'PLSDONOT') || (displayContent.join('') == 'MAXDIGITS')) {
+        clearDisplay();
+
+    }
+    //Decimal can't be added to display more than once
     if((displayContent.length < 10) && !(displayContent.includes('.'))) {
         displayContent.push('.')
         display.textContent = displayContent.join('');
     }
 };
+//numbers get added to display on press
 const pressNum = function(e) {
     if((displayContent.join('') == 'PLSDONOT') || (displayContent.join('') == 'MAXDIGITS')) {
-        displayContent = []
+        clearDisplay();
     }
     if(displayContent.length < 10) {
         displayContent.push(e);
        display.textContent = displayContent.join('');
     }
 };
-
+// operator value is set on press
 const pressOperator = function(e) {
+    if((displayContent.join('') == 'PLSDONOT') || (displayContent.join('') == 'MAXDIGITS')) {
+        clearDisplay();
+    }
+    //allows operator switching 
     if(opValue != '') {
         opValue = e;
     } else {
+        // logic to allow operation without hitting equals each time
         let subA = bValue;
         let subB = displayContent;
         if((subA.length > 0) && (subB.length > 0) && opValue) {
@@ -37,7 +48,12 @@ const pressOperator = function(e) {
         opValue = e;
     }
 };
+//calls operate function on specified parameters
 const pressEquals = function() {
+    if((displayContent.join('') == 'PLSDONOT') || (displayContent.join('') == 'MAXDIGITS')) {
+        clearDisplay();
+    }
+    //stored values allow check against empty parameters, and recalls input on recursive operation
     let storedA = bValue;
     let storedB = displayContent;
     if((storedA.length == 0) || (storedB.length == 0)) {
@@ -56,7 +72,9 @@ const pressEquals = function() {
     newResult = operate(opValue, a, b);
     displayContent = Array.from(String(newResult));
     if(displayContent.length > 10) {
-        display.textContent = '(MAXDIGITS)'
+        displayContent = ['M','A','X','D','I','G','I','T','S']
+        display.textContent = displayContent.join('');
+        unSelected();
     } else {
         display.textContent = displayContent.join('');
         storedOp = opValue
@@ -64,13 +82,16 @@ const pressEquals = function() {
         unSelected();
     }
 };
+// removes the selected class from operator buttons when called
 const unSelected = function() {
     let opBtns = document.getElementsByClassName('opButton');
     for(i = 0; i < opBtns.length; i++) {
         opBtns[i].classList.remove('selected');
     }
 }
+//clears display and resets global variables
 const clearDisplay = function() {
+    unSelected();
     aValue = [];
     bValue = [];
     displayContent = [];
@@ -78,10 +99,15 @@ const clearDisplay = function() {
     opValue = '';
     display.textContent = displayContent
 };
+//clears current entry, calls clearDisplay when pressed twice
 const clearEntry = function() {
+    if (displayContent.length === 0){
+        clearDisplay();
+    }
     displayContent = [];
     display.textContent = displayContent;
 };
+//adds event listeners to calculator buttons
 const pageLoad = function() {
     const numBtns = document.getElementsByClassName('numeralBtn');
     for(i = 0; i < numBtns.length; i++) {
@@ -102,6 +128,8 @@ const pageLoad = function() {
     clearEntryBtn.addEventListener('click', function() {
         clearEntry();
     })
+    //operator buttons call unSelected when pressed to prevent multiple operator buttons
+    //from being selected at once
     const plusBtn = document.getElementById('btnPlus');
     plusBtn.addEventListener('click', function() {
         unSelected();
@@ -142,7 +170,12 @@ const subtract = function(a, b) {
 };
 //multiplies two numbers
 const multiply = function(a, b) {
-    return (a * b);
+    let result = (a * b);
+    if(result % 1 === 0) {
+        return result;
+    }else {
+        return (Math.round(result * 10000)/10000);
+    }
 };
 //divides a by b, returns remainder in rounded decimal
 const divide = function(a, b) {

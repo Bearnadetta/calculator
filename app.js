@@ -12,6 +12,9 @@ const pressDec = function() {
     }
 };
 const pressNum = function(e) {
+    if((displayContent.join('') == 'PLSDONOT') || (displayContent.join('') == 'MAXDIGITS')) {
+        displayContent = []
+    }
     if(displayContent.length < 10) {
         displayContent.push(e);
        display.textContent = displayContent.join('');
@@ -19,16 +22,20 @@ const pressNum = function(e) {
 };
 
 const pressOperator = function(e) {
-    let subA = bValue;
-    let subB = displayContent;
-    if((subA.length > 0) && (subB.length > 0) && opValue) {
-        pressEquals();
+    if(opValue != '') {
+        opValue = e;
+    } else {
+        let subA = bValue;
+        let subB = displayContent;
+        if((subA.length > 0) && (subB.length > 0) && opValue) {
+            pressEquals();
+        }
+        aValue = bValue;
+        bValue = displayContent;
+        display.textContent = displayContent.join('');
+        displayContent = [];
+        opValue = e;
     }
-    aValue = bValue;
-    bValue = displayContent;
-    display.textContent = displayContent.join('');
-    displayContent = [];
-    opValue = e;
 };
 const pressEquals = function() {
     let storedA = bValue;
@@ -38,9 +45,12 @@ const pressEquals = function() {
     }
     if(opValue == ''){
         opValue = storedOp;
+        aValue = displayContent;
+        bValue = storedA;
+    } else {
+        aValue = bValue;
+        bValue = displayContent;
     }
-    aValue = bValue;
-    bValue = displayContent;
     let a = parseFloat(aValue.join(''));
     let b = parseFloat(bValue.join(''));
     newResult = operate(opValue, a, b);
@@ -51,6 +61,7 @@ const pressEquals = function() {
         display.textContent = displayContent.join('');
         storedOp = opValue
         opValue = '';
+        unSelected();
     }
 };
 const unSelected = function() {
@@ -63,6 +74,8 @@ const clearDisplay = function() {
     aValue = [];
     bValue = [];
     displayContent = [];
+    storedOp = '';
+    opValue = '';
     display.textContent = displayContent
 };
 const clearEntry = function() {
@@ -91,21 +104,25 @@ const pageLoad = function() {
     })
     const plusBtn = document.getElementById('btnPlus');
     plusBtn.addEventListener('click', function() {
+        unSelected();
         this.classList.add('selected');
         pressOperator('plus');
     })
     const minusBtn = document.getElementById('btnMinus');
     minusBtn.addEventListener('click', function() {
+        unSelected();
         this.classList.add('selected');
         pressOperator('minus');
     })
     const multiplyBtn = document.getElementById('btnMultiply');
     multiplyBtn.addEventListener('click', function() {
+        unSelected();
         this.classList.add('selected');
         pressOperator('times');
     })
     const divideBtn = document.getElementById('btnDivide');
     divideBtn.addEventListener('click', function() {
+        unSelected();
         this.classList.add('selected');
         pressOperator('division');
     })
@@ -134,7 +151,7 @@ const divide = function(a, b) {
         aValue = [];
         bValue = [];
         opValue = '';
-        return 'PLSNO';
+        return 'PLSDONOT';
     }else if ((a % b ) != 0) {
         return (Math.round(a * 10000.0 / b)/10000)
     }else {

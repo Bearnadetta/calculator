@@ -23,10 +23,11 @@ body {
 }
 
 #display {
-    border: 1px solid black;
+    border: 3px groove #818fbe;
     background-color: #a6b8f3;
     width : 80%;
     margin: 40px 20px 20px 40px;
+    padding: 5px;
     height: 50px;
     font-size: 38pt;
     text-align: right;
@@ -34,7 +35,8 @@ body {
 
 #calcButtons {
     position: relative;
-    border: 1px solid black;
+    border: 2px groove grey;
+    border-radius: 15px;
     height: 70%;
     width: 80%;
     margin: 40px;
@@ -50,11 +52,16 @@ body {
     padding: 15px;
     margin: 5px;
     border-radius: 15px;
+    border: 3px groove grey;
     background-color: #8674aa;
     color: white;
     font-weight: bold;
     font-size: 15px;
 }
+.button:active {
+    transform: translateY(3px);
+}
+
 #btn0 {
     grid-column: span 2;
 }

@@ -18,9 +18,7 @@ const pressNum = function(e) {
 };
 
 const pressOperator = function(e) {
-    if(aValue && bValue && opValue) {
-        
-    }
+    
     aValue = bValue;
     bValue = displayContent;
     display.textContent = displayContent.join('');
@@ -28,6 +26,11 @@ const pressOperator = function(e) {
     opValue = e;
 }
 const pressEquals = function() {
+    let storedA = bValue;
+    let storedB = displayContent;
+    if((storedA.length == 0) || (storedB.length == 0)) {
+        return;
+    }
     aValue = bValue;
     bValue = displayContent;
     let a = parseFloat(aValue.join(''));
@@ -35,10 +38,10 @@ const pressEquals = function() {
     newResult = operate(opValue, a, b);
     displayContent = Array.from(String(newResult));
     if(displayContent.length > 10) {
-        display.textContent = 'MAXDIGITS'
+        display.textContent = '(MAXDIGITS)'
     } else {
         display.textContent = displayContent.join('');
-        aValue = [];
+       // aValue = [];
     }
 }
 
@@ -101,7 +104,10 @@ const multiply = function(a, b) {
 const divide = function(a, b) {
     //prevent divide by 0
     if(b == 0) {
-        return 'ERROR';
+        aValue = [];
+        bValue = [];
+        opValue = '';
+        return 'PLSNO';
     }else if ((a % b ) != 0) {
         return (Math.round(a * 10000.0 / b)/10000)
     }else {

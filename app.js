@@ -32,8 +32,9 @@ const pressOperator = function(e) {
         clearDisplay();
     }
     //allows operator switching 
-    if(opValue != '') {
+    if((opValue != '') && displayContent.length === 0) {
         opValue = e;
+        
     } else {
         // logic to allow operation without hitting equals each time
         let subA = bValue;

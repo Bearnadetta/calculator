@@ -13,7 +13,7 @@ body {
 }
 
 #calc {
-    border: 1px solid black;
+    border: 2px solid black;
     border-radius: 25px;
     box-shadow: 0px 0px 50px  #523f63 ;
     background-color: #cda5f3;
@@ -64,7 +64,9 @@ body {
 .button:active {
     transform: translateY(3px);
 }
-
+.selected {
+    border: 3px groove #F3CDA5;
+}
 #btnCe {
     background-color: #A5B1F3
 }

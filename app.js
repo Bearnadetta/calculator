@@ -2,6 +2,7 @@ let displayContent = [];
 let aValue = [];
 let bValue = [];
 let opValue = '';
+let storedOp = '';
 const display = document.getElementById('display');
 
 const pressDec = function() {
@@ -28,12 +29,15 @@ const pressOperator = function(e) {
     display.textContent = displayContent.join('');
     displayContent = [];
     opValue = e;
-}
+};
 const pressEquals = function() {
     let storedA = bValue;
     let storedB = displayContent;
     if((storedA.length == 0) || (storedB.length == 0)) {
         return;
+    }
+    if(opValue == ''){
+        opValue = storedOp;
     }
     aValue = bValue;
     bValue = displayContent;
@@ -45,9 +49,16 @@ const pressEquals = function() {
         display.textContent = '(MAXDIGITS)'
     } else {
         display.textContent = displayContent.join('');
+        storedOp = opValue
+        opValue = '';
     }
 };
-
+const unSelected = function() {
+    let opBtns = document.getElementsByClassName('opButton');
+    for(i = 0; i < opBtns.length; i++) {
+        opBtns[i].classList.remove('selected');
+    }
+}
 const clearDisplay = function() {
     aValue = [];
     bValue = [];
@@ -80,18 +91,22 @@ const pageLoad = function() {
     })
     const plusBtn = document.getElementById('btnPlus');
     plusBtn.addEventListener('click', function() {
+        this.classList.add('selected');
         pressOperator('plus');
     })
     const minusBtn = document.getElementById('btnMinus');
     minusBtn.addEventListener('click', function() {
+        this.classList.add('selected');
         pressOperator('minus');
     })
     const multiplyBtn = document.getElementById('btnMultiply');
     multiplyBtn.addEventListener('click', function() {
+        this.classList.add('selected');
         pressOperator('times');
     })
     const divideBtn = document.getElementById('btnDivide');
     divideBtn.addEventListener('click', function() {
+        this.classList.add('selected');
         pressOperator('division');
     })
     const equalBtn = document.getElementById('btnEquals');

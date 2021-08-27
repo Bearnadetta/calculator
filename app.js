@@ -4,6 +4,17 @@ let bValue = [];
 let opValue = '';
 let storedOp = '';
 const display = document.getElementById('display');
+const equalBtn = document.getElementById('btnEquals');
+const numBtns = document.getElementsByClassName('numeralBtn');
+const decBtn = document.getElementById('btnDecimal');
+const clearBtn = document.getElementById('btnClear');
+const clearEntryBtn = document.getElementById('btnCe');
+const plusBtn = document.getElementById('btnPlus');
+const minusBtn = document.getElementById('btnMinus');
+const multiplyBtn = document.getElementById('btnMultiply');
+const divideBtn = document.getElementById('btnDivide');
+
+
 //decimal is added to display on press
 const pressDec = function() {
     if((displayContent.join('') == 'PLSDONOT') || (displayContent.join('') == 'MAXDIGITS')) {
@@ -110,52 +121,43 @@ const clearEntry = function() {
 };
 //adds event listeners to calculator buttons
 const pageLoad = function() {
-    const numBtns = document.getElementsByClassName('numeralBtn');
     for(i = 0; i < numBtns.length; i++) {
         let numValue = numBtns[i].textContent;
         numBtns[i].addEventListener('click',function(){
             pressNum(numValue);
         })
     }
-    const decBtn = document.getElementById('btnDecimal');
     decBtn.addEventListener('click', function(){
         pressDec();
     })
-    const clearBtn = document.getElementById('btnClear');
     clearBtn.addEventListener('click', function(){
         clearDisplay();
     })
-    const clearEntryBtn = document.getElementById('btnCe');
     clearEntryBtn.addEventListener('click', function() {
         clearEntry();
     })
     //operator buttons call unSelected when pressed to prevent multiple operator buttons
     //from being selected at once
-    const plusBtn = document.getElementById('btnPlus');
     plusBtn.addEventListener('click', function() {
         unSelected();
         this.classList.add('selected');
         pressOperator('plus');
     })
-    const minusBtn = document.getElementById('btnMinus');
     minusBtn.addEventListener('click', function() {
         unSelected();
         this.classList.add('selected');
         pressOperator('minus');
     })
-    const multiplyBtn = document.getElementById('btnMultiply');
     multiplyBtn.addEventListener('click', function() {
         unSelected();
         this.classList.add('selected');
         pressOperator('times');
     })
-    const divideBtn = document.getElementById('btnDivide');
     divideBtn.addEventListener('click', function() {
         unSelected();
         this.classList.add('selected');
         pressOperator('division');
     })
-    const equalBtn = document.getElementById('btnEquals');
     equalBtn.addEventListener('click', function() {
         unSelected();
         pressEquals();

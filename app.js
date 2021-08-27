@@ -14,7 +14,6 @@ const minusBtn = document.getElementById('btnMinus');
 const multiplyBtn = document.getElementById('btnMultiply');
 const divideBtn = document.getElementById('btnDivide');
 
-
 //decimal is added to display on press
 const pressDec = function() {
     if((displayContent.join('') == 'PLSDONOT') || (displayContent.join('') == 'MAXDIGITS')) {
@@ -148,22 +147,22 @@ const pageLoad = function() {
     plusBtn.addEventListener('click', function() {
         unSelected();
         this.classList.add('selected');
-        pressOperator('plus');
+        pressOperator('+');
     })
     minusBtn.addEventListener('click', function() {
         unSelected();
         this.classList.add('selected');
-        pressOperator('minus');
+        pressOperator('-');
     })
     multiplyBtn.addEventListener('click', function() {
         unSelected();
         this.classList.add('selected');
-        pressOperator('times');
+        pressOperator('*');
     })
     divideBtn.addEventListener('click', function() {
         unSelected();
         this.classList.add('selected');
-        pressOperator('division');
+        pressOperator('/');
     })
     equalBtn.addEventListener('click', function() {
         unSelected();
@@ -204,16 +203,50 @@ const divide = function(a, b) {
 };
 //calls one of the operator functions with two numbers
 const operate = function(operator, num1, num2) {
-    if(operator == 'plus') {
+    if(operator == '+') {
         return add(num1, num2);
-    }else if(operator == 'minus') {
+    }else if(operator == '-') {
         return subtract(num1, num2);
-    }else if(operator == 'times') {
+    }else if(operator == '*') {
         return multiply(num1, num2);
-    }else if(operator == 'division'){
+    }else if(operator == '/'){
         return divide(num1, num2);
     }
 };
+
+const keyboardPress = function(e) {
+    if (e.key >= 0 && e.key <= 9) pressNum(e.key)
+    if (e.key === '.') pressDec()
+    if (e.key === '=' || e.key === 'Enter') {
+        pressEquals()
+        unSelected()
+    }
+    if (e.key === 'Backspace') clearEntry()
+    if (e.key === 'Escape') clearDisplay()
+    if (e.key === '+' || e.key === '-' || e.key === '/' || e.key === '*') {
+        unSelected();
+        pressOperator(e.key)
+        switch(e.key) {
+            case '+':
+                plusBtn.classList.add('selected')
+                break;
+            case '-':
+                minusBtn.classList.add('selected')
+                break;
+            case '/':
+                divideBtn.classList.add('selected')
+                break;
+            case '*':
+                multiplyBtn.classList.add('selected')
+                break;
+            default:
+                return null;
+        }
+        
+    }
+};
+
+window.addEventListener('keydown', keyboardPress)
 
 // runs pageload function when page loads to set constants and event listeners
 pageLoad();

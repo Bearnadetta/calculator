@@ -19,14 +19,15 @@ const divideBtn = document.getElementById('btnDivide');
 const pressDec = function() {
     if((displayContent.join('') == 'PLSDONOT') || (displayContent.join('') == 'MAXDIGITS')) {
         clearDisplay();
-
     }
+
     //Decimal can't be added to display more than once
     if((displayContent.length < 10) && !(displayContent.includes('.'))) {
         displayContent.push('.')
         display.textContent = displayContent.join('');
     }
 };
+
 //numbers get added to display on press
 const pressNum = function(e) {
     if((displayContent.join('') == 'PLSDONOT') || (displayContent.join('') == 'MAXDIGITS')) {
@@ -37,6 +38,7 @@ const pressNum = function(e) {
        display.textContent = displayContent.join('');
     }
 };
+
 // operator value is set on press
 const pressOperator = function(e) {
     if((displayContent.join('') == 'PLSDONOT') || (displayContent.join('') == 'MAXDIGITS')) {
@@ -60,6 +62,7 @@ const pressOperator = function(e) {
         opValue = e;
     }
 };
+
 //calls operate function on specified parameters
 const pressEquals = function() {
     if((displayContent.join('') == 'PLSDONOT') || (displayContent.join('') == 'MAXDIGITS')) {
@@ -94,13 +97,15 @@ const pressEquals = function() {
         
     }
 };
+
 // removes the selected class from operator buttons when called
 const unSelected = function() {
     let opBtns = document.getElementsByClassName('opButton');
     for(i = 0; i < opBtns.length; i++) {
         opBtns[i].classList.remove('selected');
     }
-}
+};
+
 //clears display and resets global variables
 const clearDisplay = function() {
     unSelected();
@@ -111,6 +116,7 @@ const clearDisplay = function() {
     opValue = '';
     display.textContent = displayContent
 };
+
 //clears current entry, calls clearDisplay when pressed twice
 const clearEntry = function() {
     if (displayContent.length === 0){
@@ -119,6 +125,7 @@ const clearEntry = function() {
     displayContent = [];
     display.textContent = displayContent;
 };
+
 //adds event listeners to calculator buttons
 const pageLoad = function() {
     for(i = 0; i < numBtns.length; i++) {
@@ -207,4 +214,6 @@ const operate = function(operator, num1, num2) {
         return divide(num1, num2);
     }
 };
+
+// runs pageload function when page loads to set constants and event listeners
 pageLoad();

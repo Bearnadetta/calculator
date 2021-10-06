@@ -213,7 +213,7 @@ const operate = function(operator, num1, num2) {
         return divide(num1, num2);
     }
 };
-
+//recognizes keyboard input and allows numpad use of calculator
 const keyboardPress = function(e) {
     if (e.key >= 0 && e.key <= 9) pressNum(e.key)
     if (e.key === '.') pressDec()

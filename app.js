@@ -1,3 +1,4 @@
+//global variables, could be rearranged into class
 let displayContent = [];
 let aValue = [];
 let bValue = [];
